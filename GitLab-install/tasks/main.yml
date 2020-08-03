@@ -28,7 +28,7 @@
       - https
       
 - name: Restart Firewall
-  systemd: name = firewalld state=reloaded
+  systemd: name=firewalld state=reloaded
     
 #  shell: |
 #    systemctl enable sshd
