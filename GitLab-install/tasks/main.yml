@@ -4,7 +4,7 @@
 - name: Install necessary dependencies 
   yum:
     state: latest
-    name: "{{ item }}"
+    name: {{ item }}
     loop:
       - curl
       - policycoreutils
@@ -16,7 +16,7 @@
   systemd:  
     state: started
     enabled: yes
-    name: "{{ item }}"
+    name: {{ item }}
     loop:
       - sshd
       - postfix
@@ -25,7 +25,7 @@
 - name: Configure firewall
   firewalld:
     permanent: yes
-    service: "{{ item }}"
+    service: {{ item }}
     loop:
       - http
       - https
