@@ -1,2 +1,55 @@
 ---
 # tasks file for GitLab-install
+
+- name: Install necessary dependencies 
+  yum:
+    state: latest
+    name:
+      - curl
+      - policycoreutils
+      - openssh-server
+      - openssh-clients
+      - postfix
+
+- name: Configure the necessary dependencies
+  systemd:  
+    state: started
+    enabled: yes
+    name: 
+      - sshd
+      - postfix
+  
+
+- name: Configure firewall
+  firewalld:
+    permanent: yes
+    service:
+      - http
+      - https
+      
+- name: Restart Firewall
+  systemd: name = firewalld state=reloaded
+    
+#  shell: |
+#    systemctl enable sshd
+#    systemctl start sshd
+#    firewall-cmd --permanent --add-service=http
+#    firewall-cmd --permanent --add-service=https
+#    systemctl reload firewalld
+
+# - name: install Postfix to send notification emails
+#   shell: |
+#     dnf install postfix
+#     systemctl enable postfix
+#     systemctl start postfix
+
+- name: Download repository configuration script
+  get_url:
+    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh
+
+- name: Install repository
+  shell: ./script.rpm.sh
+
+
+- name: Install GitLab
+  yum: name=gitlab-ce state=latest
