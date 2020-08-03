@@ -1,0 +1,7 @@
+---
+- name: ======================= GitLab INSTALLATION =======================
+  hosts: all
+  become: yes
+
+  roles:
+    - {role: GitLab-install, when: ansible-system=='Linux'}
