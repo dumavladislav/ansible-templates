@@ -4,7 +4,8 @@
 - name: Install necessary dependencies 
   yum:
     state: latest
-    name:
+    name: "{{ item }}"
+    with_items:
       - curl
       - policycoreutils
       - openssh-server
@@ -15,7 +16,8 @@
   systemd:  
     state: started
     enabled: yes
-    name: 
+    name: "{{ item }}"
+    with_items:
       - sshd
       - postfix
   
@@ -23,7 +25,8 @@
 - name: Configure firewall
   firewalld:
     permanent: yes
-    service:
+    service: "{{ item }}"
+    with_items:
       - http
       - https
       
