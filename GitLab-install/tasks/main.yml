@@ -53,3 +53,6 @@
 
 - name: Install GitLab
   yum: name=gitlab-ce state=latest
+
+- name: Start GitLab
+  shell: gitlab-ctl reconfigure
