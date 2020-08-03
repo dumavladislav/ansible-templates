@@ -2,33 +2,26 @@
 # tasks file for GitLab-install
 
 - name: Install necessary dependencies 
-  yum:
-    state: latest
-    name: {{ item }}
-    loop:
-      - curl
-      - policycoreutils
-      - openssh-server
-      - openssh-clients
-      - postfix
+  yum: name={{ item }} state=latest
+  loop:
+    - curl
+    - policycoreutils
+    - openssh-server
+    - openssh-clients
+    - postfix
 
 - name: Configure the necessary dependencies
-  systemd:  
-    state: started
-    enabled: yes
-    name: {{ item }}
-    loop:
-      - sshd
-      - postfix
+  systemd: name={{ item }} state=started enabled=yes
+  loop:
+    - sshd
+    - postfix
   
 
 - name: Configure firewall
-  firewalld:
-    permanent: yes
-    service: {{ item }}
-    loop:
-      - http
-      - https
+  firewalld: permanent=yes service={{ item }}
+  loop:
+    - http
+    - https
       
 - name: Restart Firewall
   systemd: name=firewalld state=reloaded
