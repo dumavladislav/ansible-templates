@@ -1,2 +1,2 @@
 [GCE_CENTOS_8]
-ansible-slave-2 ansible_host=34.71.164.59
+ansible-gitlab-test ansible_host=35.222.203.185

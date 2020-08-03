@@ -18,7 +18,7 @@
   
 
 - name: Configure firewall
-  firewalld: permanent=yes service={{ item }}
+  firewalld: permanent=yes service={{ item }} state=enabled
   loop:
     - http
     - https
@@ -42,6 +42,7 @@
 - name: Download repository configuration script
   get_url:
     url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh
+    dest: .
 
 - name: Install repository
   shell: ./script.rpm.sh
