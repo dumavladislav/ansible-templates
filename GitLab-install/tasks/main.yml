@@ -43,6 +43,9 @@
   get_url:
     url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh
 
+- name: Permissions
+  file: dest=./script.rpm.sh mode=u+rwx
+
 - name: Install repository
   shell: ./script.rpm.sh
 
