@@ -1,0 +1,8 @@
+---
+- name: ======================= Docker INSTALLATION =======================
+  hosts: all
+  become: yes
+
+  roles:
+    - {role: update-upgrade, when: ansible_system=='Linux'}
+    - {role: docker-install, when: ansible_system=='Linux'}

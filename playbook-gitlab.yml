@@ -4,4 +4,5 @@
   become: yes
 
   roles:
+    - {role: update-upgrade, when: ansible_system=='Linux'}
     - {role: GitLab-install, when: ansible_system=='Linux'}

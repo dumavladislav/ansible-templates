@@ -1,2 +1,77 @@
 ---
 # tasks file for docker-install
+
+- block:    # =============== Block for RedHat =================
+    - name: Uninstall docker
+      yum:  name = {{item}} state = absent
+      loop: 
+        - docker
+        - docker-client
+        - docker-client-latest
+        - docker-common
+        - docker-latest
+        - docker-latest-logrotate
+        - docker-logrotate
+        - docker-engine
+            
+
+    - name: upgrade all packages
+      yum: name=* state=latest
+
+    - name: Install dependencies
+      yum:  name = {{item}} state=latest
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+      
+  when: ansible_os_family == "RedHat"
+
+- block:    # =============== Block for Ubuntu =================
+    - name: Uninstall docker
+      apt:  name = {{item}} state = absent
+      loop: 
+        - docker
+        - docker-engine
+        - docker.io
+        - containerd
+        - runc
+            
+
+    - name: Update apt-get repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+    
+    - name: upgrade all packages
+      apt: name=* state=latest
+
+    - name: Install dependencies
+      apt:  name = {{item}} state=latest
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: Add repository
+      shell: {{item}}
+        - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+        - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    - name: Update apt-get repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 
+    
+    - name: upgrade all packages
+      apt: name=* state=latest
+    
+    - name: Install docker
+      apt: name={{item}} state=latest
+      loop:
+        - docker-ce 
+        - docker-ce-cli
+        - containerd.io
+
+
+  when: ansible_os_family == "Debian"
