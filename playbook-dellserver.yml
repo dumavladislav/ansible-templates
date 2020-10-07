@@ -1,0 +1,12 @@
+---
+- name: ======================= Docker INSTALLATION =======================
+  hosts: all
+  become: yes
+
+  roles:
+    - {role: update-upgrade, when: ansible_system=='Linux'}
+    - {role: git-install, when: ansible_system=='Linux'}
+    - {role: docker-install, when: ansible_system=='Linux'}
+    - {role: jenkins-install, when: ansible_system=='Linux'}
+    - {role: code-install, when: ansible_system=='Linux'}
+    - {role: idea-install, when: ansible_system=='Linux'}
