@@ -1,2 +1,9 @@
 ---
 # tasks file for curl-install
+
+- block: # =============== Block for Ubuntu =================
+
+    - name: Install Curl
+      apt: name=curl state=latest
+
+  when: ansible_os_family == "Debian"
