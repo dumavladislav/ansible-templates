@@ -3,6 +3,9 @@
 
 - block: # =============== Block for Ubuntu =================
 
+    - name: Uninstall jenkins
+      apt: name=jenkins state=absent
+
     - name: Add repository
       shell: |
         wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
