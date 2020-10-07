@@ -6,6 +6,7 @@
 
   roles:
     - {role: update-upgrade, when: ansible_system=='Linux'}
+    - {role: curl-install, when: ansible_system=='Linux'}
     - {role: git-install, when: ansible_system=='Linux'}
     - {role: docker-install, when: ansible_system=='Linux'}
     - {role: java8-install, when: ansible_system=='Linux'}
