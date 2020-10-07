@@ -1,2 +1,2 @@
-[GCE_CENTOS_8]
-ansible-gitlab-test ansible_host=146.148.88.244
+[GCE_UBUNTU_20]
+ansible-gitlab-test ansible_host=34.123.121.21
