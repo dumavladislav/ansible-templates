@@ -5,6 +5,6 @@
 
     - name: Install IntelliJ Idea Community
       shell: |
-        sudo snap install intellij-idea-community --classic
+        snap install intellij-idea-community --classic
   
   when: ansible_os_family == "Debian"
