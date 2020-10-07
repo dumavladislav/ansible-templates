@@ -21,4 +21,4 @@
     - name: Install VS Code
       apt: name=code state=latest
 
-when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian"
