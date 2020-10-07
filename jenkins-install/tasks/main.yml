@@ -9,8 +9,8 @@
     - name: Add repository
       shell: |
         wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-        sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
-            /etc/apt/sources.list.d/jenkins.list'
+        sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+        apt-get update
   
     - name: Update apt-get repo and cache
       apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 
