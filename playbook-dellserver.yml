@@ -1,6 +1,7 @@
 ---
 - name: ======================= Docker INSTALLATION =======================
-  hosts: all
+  hosts: 
+    - HOME_DELL_SERVER
   become: yes
 
   roles:
