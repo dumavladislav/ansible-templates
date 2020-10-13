@@ -10,6 +10,7 @@
     - {role: git-install, when: ansible_system=='Linux'}
     - {role: docker-install, when: ansible_system=='Linux'}
     - {role: java8-install, when: ansible_system=='Linux'}
+    - {role: maven-install, when: ansible_system=='Linux'}
     - {role: jenkins-install, when: ansible_system=='Linux'}
     - {role: code-install, when: ansible_system=='Linux'}
     - {role: idea-install, when: ansible_system=='Linux'}

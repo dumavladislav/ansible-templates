@@ -1,2 +1,9 @@
 ---
 # tasks file for maven-install
+
+- block:
+
+    - name: install maven
+      apt: name=maven state=latest
+
+  when: ansible_os_family=="Debian"
