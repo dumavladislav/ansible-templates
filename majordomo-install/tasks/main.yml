@@ -83,10 +83,10 @@
        state: present
 
     - name: Template Apache settings
-        ansible.builtin.template:
-          src: ../templates/apache.default.conf.j2
-          dest: /etc/apache2/sites-available/000-default.conf
-          mode: '0644'
+      ansible.builtin.template:
+        src: ../templates/apache.default.conf.j2
+        dest: /etc/apache2/sites-available/000-default.conf
+        mode: '0644'
 
     - name: Remove default index.html file
       ansible.builtin.file:
@@ -129,18 +129,18 @@
 #          line: 'max_execution_time '
 
     - name: Template PHP settings
-        ansible.builtin.template:
-          src: ../templates/php.ini.j2
-          dest: /etc/php/{{php_version}}/apache2/php.ini
-          mode: '0644'
+      ansible.builtin.template:
+        src: ../templates/php.ini.j2
+        dest: /etc/php/{{php_version}}/apache2/php.ini
+        mode: '0644'
 
     - name: Restart Apache
-        service:
-          name: "{{ item }}"
-          state: restarted
-        with_items:
-          - httpd
-          - apache2ctl
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items:
+        - httpd
+        - apache2ctl
 
 
     - name: MajorDoMo. Create directory
