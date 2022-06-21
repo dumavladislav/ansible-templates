@@ -16,6 +16,11 @@
         name: pymysql
         state: present
 
+    # mysql_secure_installation
+    - name: MySQL Secure Installation
+      mysql_user: name=root host={{mysql_host}} password={{mysql_root_password}}
+      no_log: yes
+
     - name: Install MySQL
       apt:
         pkg:
@@ -36,10 +41,6 @@
           - php-curl
           - libapache2-mod-php
           - phpmyadmin
-
-    # mysql_secure_installation
-    - name: MySQL Secure Installation
-      mysql_user: name=root host={{mysql_host}} password={{mysql_root_password}}
 
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
