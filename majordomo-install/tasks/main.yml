@@ -59,6 +59,9 @@
         name: 'root'
         host: 'localhost'
         password: '{{mysql_root_password}}'
+        login_host: 'localhost'
+        login_user: 'root'
+        login_password: '{{mysql_root_password}}'
         state: present
 
     - name: Create database user with name 'majordomo'
