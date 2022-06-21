@@ -16,14 +16,6 @@
         name: pymysql
         state: present
 
-    # mysql_secure_installation
-    - name: MySQL Secure Installation
-      mysql_user: name=root host={{item}} password={{mysql_root_password}}
-      with_items:
-        - 127.0.0.1
-        - ::1
-        - localhost
-
     - name: Install MySQL
       apt:
         pkg:
@@ -44,6 +36,20 @@
           - php-curl
           - libapache2-mod-php
           - phpmyadmin
+
+    - name: Template a file to /root/.my.cnf
+      ansible.builtin.template:
+        src: ../templates/my.cnf.j2
+        dest: /root/.my.cnf
+        mode: '0644'
+
+    # mysql_secure_installation
+    - name: MySQL Secure Installation
+      mysql_user: name=root host={{item}} password={{mysql_root_password}}
+      with_items:
+        - 127.0.0.1
+        - ::1
+        - localhost
 
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
