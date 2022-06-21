@@ -46,7 +46,7 @@
     # mysql_secure_installation
     - name: MySQL Secure Installation
       mysql_user:
-        login_host: {{item}}
+        login_host: 'localhost'
         login_user: 'root'
         login_password: ''
         name: 'root'
