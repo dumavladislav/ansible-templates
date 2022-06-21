@@ -1,0 +1,45 @@
+---
+# tasks file for jenkins-install
+
+- block: # =============== Block for Ubuntu =================
+
+    - name: Install utils
+      apt:
+        pkg:
+          - nano
+          - wget
+          - unzip
+          - mysql-server
+          - mysql-client
+          - apache2
+          - apache2-utils
+          - php
+          - php-cgi
+          - php-cli
+          - php-pear
+          - php-mysql
+          - php-mbstring
+          - php-xml
+          - curl
+          - libcurl3
+          - libcurl3-dev
+          - php-curl
+          - libapache2-mod-php
+          - phpmyadmin
+
+    # mysql_secure_installation
+    - name: MySQL Secure Installation
+      mysql_user: name=root host={{item}} password={{mysql_root_password}}
+
+    - name: Create new database 'db_terminal'
+      community.mysql.mysql_db:
+        name:
+          - db_terminal
+        state: present
+
+    - name: Create database user with name 'majordomo'
+      community.mysql.mysql_user:
+        name: majordomo
+        password: 123456
+        priv: '*.*:ALL'
+        state: present
