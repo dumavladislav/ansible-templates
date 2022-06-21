@@ -1,2 +1,4 @@
 ---
-# vars file for jenkins-install
+# vars file for majordomo-install
+mysql_host: localhost
+mysql_root_password: 123456
