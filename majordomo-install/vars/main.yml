@@ -2,3 +2,11 @@
 # vars file for majordomo-install
 mysql_host: localhost
 mysql_root_password: 123456
+
+mysql_majordomo_user: 'majordomo'
+mysql_majordomo_password: 'majordomo'
+
+apache_log_dir: '/home/majordomo/apache/logs'
+
+php_version: '7.4'
+

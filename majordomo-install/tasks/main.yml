@@ -3,6 +3,12 @@
 
 - block: # =============== Block for Ubuntu =================
 
+    - name: New user 'majordomo' with a primary group of 'admin'
+      ansible.builtin.user:
+        name: majordomo
+        comment: MajorDoMo user
+        group: admin
+
     - name: Install utils
       apt:
         pkg:
@@ -64,9 +70,104 @@
         login_password: '{{mysql_root_password}}'
         state: present
 
-    - name: Create database user with name 'majordomo'
-      community.mysql.mysql_user:
-        name: majordomo
-        password: '{{mysql_root_password}}'
-        priv: '*.*:ALL'
-        state: present
+    # MySQL MajorDomo user
+    - name: MySQL MajorDomo user
+      mysql_user:
+       name: '{{mysql_majordomo_user}}'
+       host_all: yes
+       password: '{{mysql_majordomo_password}}'
+       login_host: 'localhost'
+       login_user: '{{mysql_majordomo_user}}'
+       login_password: '{{mysql_majordomo_password}}'
+       priv: '*.*:ALL'
+       state: present
+
+    - name: Template Apache settings
+        ansible.builtin.template:
+          src: ../templates/apache.default.conf.j2
+          dest: /etc/apache2/sites-available/000-default.conf
+          mode: '0644'
+
+    - name: Remove default index.html file
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: Restart Apache
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items:
+        - httpd
+        - apache2ctl
+
+    - name: Set ServerName localhost
+      ansible.builtin.lineinfile:
+        path: /etc/apache2/apache2.conf
+        regexp: '^ServerName '
+        line: 'ServerName localhost'
+
+#    - name: Set PHP short_open_tag = On
+#      ansible.builtin.lineinfile:
+#        path: /etc/php/{{php_version}}/apache2/php.ini
+#        regexp: '^short_open_tag '
+#        line: 'short_open_tag = On'
+
+    - name: a2enmod rewrite
+      shell: "a2enmod rewrite"
+
+#    - name: Set error_reporting  =  E_ALL & ~E_NOTICE
+#        ansible.builtin.lineinfile:
+#          path: /etc/php/{{php_version}}/apache2/php.ini
+#          regexp: '^error_reporting '
+#          line: 'error_reporting  =  E_ALL & ~E_NOTICE'
+#
+#    - name: Set max_execution_time = 90
+#        ansible.builtin.lineinfile:
+#          path: /etc/php/{{php_version}}/apache2/php.ini
+#          regexp: '^error_reporting '
+#          line: 'max_execution_time '
+
+    - name: Template PHP settings
+        ansible.builtin.template:
+          src: ../templates/php.ini.j2
+          dest: /etc/php/{{php_version}}/apache2/php.ini
+          mode: '0644'
+
+    - name: Restart Apache
+        service:
+          name: "{{ item }}"
+          state: restarted
+        with_items:
+          - httpd
+          - apache2ctl
+
+
+    - name: MajorDoMo. Create directory
+      file:
+        path: /home/majordomo/distr
+        state: directory
+
+    - name: MajorDoMo. Download distr
+      get_url:
+        url: https://github.com/sergejey/majordomo/archive/master.zip
+        dest: /home/majordomo/distr/master.zip
+        mode: '0440'
+
+    - name: Extract distr
+      ansible.builtin.unarchive:
+        src: /home/majordomo/distr/master.zip
+        dest: /home/majordomo/distr/master
+
+    - name: distr to WWW
+      copy:
+        src: {{item}}
+        dest: /var/www/html
+      with_items:
+        - /home/majordomo/distr/master/majordomo-master/*
+        - /home/majordomo/distr/master/majordomo-master/.htaccess
+
+    - name: MajorDoMo. Create directory
+      file:
+        path: /home/majordomo/distr
+        state: absent
