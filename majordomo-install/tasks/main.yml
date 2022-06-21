@@ -17,25 +17,25 @@
         state: present
 
     - name: Install MySQL
-        apt:
-          pkg:
-            - mysql-server
-            - mysql-client
-            - apache2
-            - apache2-utils
-            - php
-            - php-cgi
-            - php-cli
-            - php-pear
-            - php-mysql
-            - php-mbstring
-            - php-xml
-            - curl
-            - libcurl4
-            #          - libcurl4-dev
-            - php-curl
-            - libapache2-mod-php
-            - phpmyadmin
+      apt:
+        pkg:
+          - mysql-server
+          - mysql-client
+          - apache2
+          - apache2-utils
+          - php
+          - php-cgi
+          - php-cli
+          - php-pear
+          - php-mysql
+          - php-mbstring
+          - php-xml
+          - curl
+          - libcurl4
+          #          - libcurl4-dev
+          - php-curl
+          - libapache2-mod-php
+          - phpmyadmin
 
     # mysql_secure_installation
     - name: MySQL Secure Installation
