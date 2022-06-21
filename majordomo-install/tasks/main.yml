@@ -67,6 +67,6 @@
     - name: Create database user with name 'majordomo'
       community.mysql.mysql_user:
         name: majordomo
-        password: 123456
+        password: '{{mysql_root_password}}'
         priv: '*.*:ALL'
         state: present
