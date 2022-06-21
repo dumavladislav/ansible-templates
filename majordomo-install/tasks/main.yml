@@ -43,6 +43,13 @@
         dest: /root/.my.cnf
         mode: '0644'
 
+    - name: Create new database 'db_terminal'
+      community.mysql.mysql_db:
+        name:
+          - db_terminal
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        state: present
+
     # mysql_secure_installation
     - name: MySQL Secure Installation
       mysql_user:
@@ -52,13 +59,6 @@
         name: 'root'
         host: 'localhost'
         password: '{{mysql_root_password}}'
-        state: present
-
-
-    - name: Create new database 'db_terminal'
-      community.mysql.mysql_db:
-        name:
-          - db_terminal
         state: present
 
     - name: Create database user with name 'majordomo'
