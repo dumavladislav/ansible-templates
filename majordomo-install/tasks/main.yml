@@ -161,7 +161,7 @@
 
     - name: distr to WWW
       copy:
-        src: {{item}}
+        src: '{{item}}'
         dest: /var/www/html
       with_items:
         - /home/majordomo/distr/master/majordomo-master/*
