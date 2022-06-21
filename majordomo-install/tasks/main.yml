@@ -48,11 +48,15 @@
       mysql_user:
         login_host: 'localhost'
         login_user: 'root'
-        login_password: ''
+        login_password: '{{mysql_root_password}}'
         name: 'root'
-        host: 'localhost'
-        password: {{mysql_root_password}}
+        host: '{{item}}'
+        password: '{{mysql_root_password}}'
         state: present
+      with_items:
+        - 127.0.0.1
+        - ::1
+        - localhost
 
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
