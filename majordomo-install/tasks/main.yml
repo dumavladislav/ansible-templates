@@ -45,7 +45,14 @@
 
     # mysql_secure_installation
     - name: MySQL Secure Installation
-      mysql_user: name=root host={{item}} password={{mysql_root_password}}
+      mysql_user:
+        login_host: {{item}}
+        login_user: 'root'
+        login_password: ''
+        name: 'root'
+        host: {{item}}
+        password: {{mysql_root_password}}
+        state: present
       with_items:
         - 127.0.0.1
         - ::1
