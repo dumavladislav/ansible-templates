@@ -18,8 +18,11 @@
 
     # mysql_secure_installation
     - name: MySQL Secure Installation
-      mysql_user: name=root host={{mysql_host}} password={{mysql_root_password}}
-      no_log: yes
+      mysql_user: name=root host={{item}} password={{mysql_root_password}}
+      with_items:
+        - 127.0.0.1
+        - ::1
+        - localhost
 
     - name: Install MySQL
       apt:
