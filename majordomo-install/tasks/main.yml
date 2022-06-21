@@ -48,14 +48,14 @@
         name:
           - db_terminal
         login_unix_socket: /var/run/mysqld/mysqld.sock
+        login_host: 'localhost'
+        login_user: 'root'
+        login_password: '{{mysql_root_password}}'
         state: present
 
     # mysql_secure_installation
     - name: MySQL Secure Installation
       mysql_user:
-        login_host: 'localhost'
-        login_user: 'root'
-        login_password: ''
         name: 'root'
         host: 'localhost'
         password: '{{mysql_root_password}}'
