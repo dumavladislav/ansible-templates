@@ -169,3 +169,9 @@
         owner: 'www-data'
         group: 'www-data'
         recurse: yes
+
+    - name: Adding user 'www-data' to group audio
+      user:
+        name: 'www-data'
+        groups: audio
+        append: yes
