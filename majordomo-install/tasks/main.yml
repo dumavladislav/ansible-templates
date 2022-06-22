@@ -48,6 +48,11 @@
         src: ../templates/my.cnf.j2
         dest: /root/.my.cnf
         mode: '0644'
+    - name: Template a file to /majordomo/.my.cnf
+      ansible.builtin.template:
+        src: ../templates/my.cnf.majordomo.j2
+        dest: /majordomo/.my.cnf
+        mode: '0644'
 
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
