@@ -53,11 +53,6 @@
         src: ../templates/my.cnf.j2
         dest: /root/.my.cnf
         mode: '0644'
-#    - name: Template a file to /majordomo/.my.cnf
-#      ansible.builtin.template:
-#        src: ../templates/my.cnf.majordomo.j2
-#        dest: /home/majordomo/.my.cnf
-#        mode: '0644'
 
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
@@ -85,18 +80,6 @@
         name: '{{mysql_majordomo_user}}'
         host_all: yes
         state: absent
-
-    # MySQL MajorDomo user
-#    - name: MySQL MajorDomo user
-#      mysql_user:
-#       name: '{{mysql_majordomo_user}}'
-#       host_all: yes
-#       password: '{{mysql_root_password}}'
-#       login_host: 'localhost'
-#       login_user: '{{mysql_majordomo_user}}'
-#       login_password: '{{mysql_root_password}}'
-#       priv: '*.*:ALL'
-#       state: present
 
     - name: Create database user MajorDomo with all database privileges
       community.mysql.mysql_user:
@@ -129,26 +112,8 @@
         regexp: '^ServerName '
         line: 'ServerName localhost'
 
-#    - name: Set PHP short_open_tag = On
-#      ansible.builtin.lineinfile:
-#        path: /etc/php/{{php_version}}/apache2/php.ini
-#        regexp: '^short_open_tag '
-#        line: 'short_open_tag = On'
-
     - name: a2enmod rewrite
       shell: "a2enmod rewrite"
-
-#    - name: Set error_reporting  =  E_ALL & ~E_NOTICE
-#        ansible.builtin.lineinfile:
-#          path: /etc/php/{{php_version}}/apache2/php.ini
-#          regexp: '^error_reporting '
-#          line: 'error_reporting  =  E_ALL & ~E_NOTICE'
-#
-#    - name: Set max_execution_time = 90
-#        ansible.builtin.lineinfile:
-#          path: /etc/php/{{php_version}}/apache2/php.ini
-#          regexp: '^error_reporting '
-#          line: 'max_execution_time '
 
     - name: Template PHP settings
       ansible.builtin.template:
@@ -171,7 +136,6 @@
       with_items:
         - '/home/majordomo/distr'
         - '/home/majordomo/distr/master'
-
 
     - name: MajorDoMo. Download distr
       get_url:
@@ -198,3 +162,8 @@
       file:
         path: /home/majordomo/distr
         state: absent
+
+    - name: Set MajorDoMo WWW owner
+        file:
+          path: /var/www/html
+          owner: 'www-data'
