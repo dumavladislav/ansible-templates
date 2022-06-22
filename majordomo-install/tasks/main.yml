@@ -158,7 +158,13 @@
         - /home/majordomo/distr/master/majordomo-master/
         - /home/majordomo/distr/master/majordomo-master/.htaccess
 
-    - name: MajorDoMo. Create directory
+    - name: Import template database (db_terminal.sql)
+      mysql_db:
+        state: import
+        name: db_terminal
+        target: /home/majordomo/distr/master/majordomo-master/db_terminal.sql
+
+    - name: MajorDoMo. Remove distr directory
       file:
         path: /home/majordomo/distr
         state: absent
