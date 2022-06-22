@@ -43,6 +43,11 @@
           - libapache2-mod-php
           - phpmyadmin
 
+    - name: MajorDoMo. Create directory
+      file:
+        path: /home/majordomo/apache/logs
+        state: directory
+
     - name: Template a file to /root/.my.cnf
       ansible.builtin.template:
         src: ../templates/my.cnf.j2
@@ -156,8 +161,7 @@
         name: "{{ item }}"
         state: restarted
       with_items:
-        - httpd
-        - apache2ctl
+        - apache2
 
 
     - name: MajorDoMo. Create directory
