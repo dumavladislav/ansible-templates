@@ -171,6 +171,7 @@
       with_items:
         - '/home/majordomo/distr'
         - '/home/majordomo/distr/master'
+      mode: '0777'
 
     - name: MajorDoMo. Download distr
       get_url:
@@ -186,12 +187,11 @@
 
     - name: distr to WWW
       copy:
-        src: '{{item}}'
+        src: '{{ item }}'
         dest: /var/www/html
       with_items:
         - /home/majordomo/distr/master/majordomo-master/*
         - /home/majordomo/distr/master/majordomo-master/.htaccess
-      remote_src: yes
 
     - name: MajorDoMo. Create directory
       file:
