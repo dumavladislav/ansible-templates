@@ -198,7 +198,6 @@
         path: /var/www/html/config.php
         owner: 'www-data'
         group: 'www-data'
-        recurse: yes
 
     - name: Configure database user
       lineinfile:
