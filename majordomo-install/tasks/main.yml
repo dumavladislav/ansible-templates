@@ -179,6 +179,7 @@
       ansible.builtin.unarchive:
         src: /home/majordomo/distr/master.zip
         dest: /home/majordomo/distr/master
+        remote_src: yes
 
     - name: distr to WWW
       copy:
