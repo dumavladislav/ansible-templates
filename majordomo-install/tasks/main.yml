@@ -166,8 +166,11 @@
 
     - name: MajorDoMo. Create directory
       file:
-        path: /home/majordomo/distr
+        path: "{{ item }}"
         state: directory
+      with_items:
+        - '/home/majordomo/distr'
+        - '/home/majordomo/distr/master'
 
     - name: MajorDoMo. Download distr
       get_url:
