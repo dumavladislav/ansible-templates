@@ -51,7 +51,7 @@
     - name: Template a file to /majordomo/.my.cnf
       ansible.builtin.template:
         src: ../templates/my.cnf.majordomo.j2
-        dest: /majordomo/.my.cnf
+        dest: /home/majordomo/.my.cnf
         mode: '0644'
 
     - name: Create new database 'db_terminal'
