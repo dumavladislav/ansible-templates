@@ -54,6 +54,11 @@
         dest: /root/.my.cnf
         mode: '0644'
 
+    - name: Drop database db_terminal
+      mysql_db:
+        state: absent
+        name: db_terminal
+
     - name: Create new database 'db_terminal'
       community.mysql.mysql_db:
         name:
