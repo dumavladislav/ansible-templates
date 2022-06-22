@@ -98,6 +98,7 @@
         name: '{{mysql_majordomo_user}}'
         password: '{{mysql_root_password}}'
         priv: '*.*:ALL'
+        host_all: yes
         state: present
 
     - name: Template Apache settings
@@ -116,8 +117,7 @@
         name: "{{ item }}"
         state: restarted
       with_items:
-        - httpd
-        - apache2ctl
+        - apache2
 
     - name: Set ServerName localhost
       ansible.builtin.lineinfile:
