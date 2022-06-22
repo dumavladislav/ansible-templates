@@ -173,7 +173,7 @@
       get_url:
         url: https://github.com/sergejey/majordomo/archive/master.zip
         dest: /home/majordomo/distr/master.zip
-        mode: '0440'
+        mode: '0777'
 
     - name: Extract distr
       ansible.builtin.unarchive:
