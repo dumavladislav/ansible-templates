@@ -191,6 +191,7 @@
       with_items:
         - /home/majordomo/distr/master/majordomo-master/*
         - /home/majordomo/distr/master/majordomo-master/.htaccess
+      remote_src: yes
 
     - name: MajorDoMo. Create directory
       file:
