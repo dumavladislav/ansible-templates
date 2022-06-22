@@ -82,16 +82,23 @@
         state: absent
 
     # MySQL MajorDomo user
-    - name: MySQL MajorDomo user
-      mysql_user:
-       name: '{{mysql_majordomo_user}}'
-       host_all: yes
-       password: '{{mysql_root_password}}'
-       login_host: 'localhost'
-       login_user: '{{mysql_majordomo_user}}'
-       login_password: '{{mysql_root_password}}'
-       priv: '*.*:ALL'
-       state: present
+#    - name: MySQL MajorDomo user
+#      mysql_user:
+#       name: '{{mysql_majordomo_user}}'
+#       host_all: yes
+#       password: '{{mysql_root_password}}'
+#       login_host: 'localhost'
+#       login_user: '{{mysql_majordomo_user}}'
+#       login_password: '{{mysql_root_password}}'
+#       priv: '*.*:ALL'
+#       state: present
+
+    - name: Create database user with name 'bob' and password '12345' with all database privileges
+      community.mysql.mysql_user:
+        name: '{{mysql_majordomo_user}}'
+        password: '{{mysql_root_password}}'
+        priv: '*.*:ALL'
+        state: present
 
     - name: Template Apache settings
       ansible.builtin.template:
