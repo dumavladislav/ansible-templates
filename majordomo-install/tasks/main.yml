@@ -167,3 +167,4 @@
       file:
         path: /var/www/html
         owner: 'www-data'
+        recurse: yes
