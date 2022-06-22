@@ -181,3 +181,28 @@
         name: 'www-data'
         groups: audio
         append: yes
+
+    - name: create config.php
+      copy:
+        src: /var/www/html/config.php.sample
+        dest: /var/www/html/config.php
+        remote_src: yes
+
+    - name: Set MajorDoMo config.php owner
+      file:
+        path: /var/www/html/config.php
+        owner: 'www-data'
+        group: 'www-data'
+      recurse: yes
+
+    - name: Configure database user
+      lineinfile:
+        path: /var/www/html/config.php
+        search_string: "Define('DB_USER', 'root');"
+        line: "Define('DB_USER', '{{mysql_majordomo_user}}');"
+
+    - name: Configure database connection
+      lineinfile:
+        path: /var/www/html/config.php
+        search_string: "Define('DB_PASSWORD', '');"
+        line: "Define('DB_PASSWORD', '{{mysql_root_password}}');"
