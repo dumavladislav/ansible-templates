@@ -210,3 +210,15 @@
         path: /var/www/html/config.php
         search_string: "Define('DB_PASSWORD', '');"
         line: "Define('DB_PASSWORD', '{{mysql_root_password}}');"
+
+    - name: Create MajorDoMo service
+      ansible.builtin.template:
+        src: ../templates/majordomo.service.j2
+        dest: /etc/systemd/system/majordomo.service
+        mode: '0644'
+
+    - name: Make sure MajorDoMo service is started and enabled
+      systemd:
+        name: "majordomo"
+        state: started
+        enabled: enabled

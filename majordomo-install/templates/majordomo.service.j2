@@ -1,0 +1,19 @@
+[Unit]
+Description=Majordomo cycles service
+Requires=network.target mysql.service apache2.service
+After=mysql.service apache2.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=/usr/bin/php /var/www/html/cycle.php
+ExecStop=/usr/bin/pkill -f cycle_*
+
+KillSignal=SIGKILL
+KillMode=control-group
+RestartSec=1min
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
